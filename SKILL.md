@@ -103,6 +103,7 @@ python3 演读DECK/publish.py --build-only # 只构建 dist/，不部署
 6. **本机代理会截断大文件下载(>~4MB)**：思源变量字体下不全 → 改用 @fontsource 逐字重静态 woff2(各 ~1.6MB)再子集化。
 7. 截图核验演示版给足时间（`--virtual-time-budget=5000`），让 fit/动画跑完再截。
 
-## 配套
-- 内容产线：`hekouwang-content-factory`（文章/贴图/视频/去 AI 味/合规红线）。
+## 配套与依赖
+- **内容产线（强依赖）：`hekouwang-content-factory`**——演示版的源文章 HTML、视觉规范(V1/V2/V3)、配色 token、字体方案都来自它；本 Skill 只做「内容→翻页演示+发布」这一半。**⚠️ 它是付费 Skill**（需作者授权），仓库不含其内容。只用引擎可直接拷 `reference/deck-engine-*.html`（零依赖独立可用）。
+- 示例：`reference/demo.html`（自包含、零依赖、双击即看的最小动画示例）。
 - 记忆：`keynote-yanshi-site`（站点现状 + 发布链路）、`keynote-deck-engine`（引擎做法）、`brand-persona-tagline`（人设三句）。
