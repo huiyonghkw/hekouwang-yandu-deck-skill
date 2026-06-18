@@ -1,5 +1,7 @@
 # hekouwang-yandu-deck-skill · 演读 DECK
 
+**中文** · [English](README.en.md)
+
 会勇禾口王的AI笔记 ·「演读 DECK」沉浸式演示产线与发布 Skill。
 
 把一篇文章/选题做成**一屏一镜、可翻页、能自动播放**的 keynote 演示版网页（**暖黑** / **米白** 两套主色），自托管字体（思源黑/宋子集化 + Anthropic 打包、零 CDN、preload 治 FOUT），并一键发布到 Cloudflare Pages。
