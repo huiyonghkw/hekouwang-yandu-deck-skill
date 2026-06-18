@@ -1,4 +1,4 @@
-# hekouwang-yandu-deck · 演读 DECK
+# hekouwang-yandu-deck-skill · 演读 DECK
 
 会勇禾口王的AI笔记 ·「演读 DECK」沉浸式演示产线与发布 Skill。
 
@@ -22,10 +22,10 @@ reference/
 
 ## 安装
 
-把本仓库放进 `~/.claude/skills/hekouwang-yandu-deck/`：
+把本仓库放进 `~/.claude/skills/hekouwang-yandu-deck-skill/`：
 
 ```bash
-git clone git@github.com:huiyonghkw/hekouwang-yandu-deck.git ~/.claude/skills/hekouwang-yandu-deck
+git clone git@github.com:huiyonghkw/hekouwang-yandu-deck-skill.git ~/.claude/skills/hekouwang-yandu-deck-skill
 ```
 
 之后在 Claude Code 里说「把这篇做成演示版 / 加一期演读 / 发 hekouwang」等即会自动加载。
