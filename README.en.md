@@ -66,3 +66,11 @@ Then in Claude Code, say things like *"turn this into a deck / add a YanDu episo
 - **One-command publish**: `python3 publish.py`; add one MANIFEST line per episode; clean URLs on CF Pages.
 
 > For the companion article/graphics/video pipeline, see `hekouwang-content-factory`.
+
+## License
+
+The code in this repo (deck engine templates, `publish.py`, `demo.html`, `home.html`, `SKILL.md`, etc.) is **MIT** licensed — see [LICENSE](LICENSE). Note:
+
+- **`hekouwang-content-factory` is a separate, paid Skill; its content is not in this repo** and is not covered by this license.
+- Noto Sans SC / Noto Serif SC are SIL OFL fonts — **no font files are bundled here**; their OFL applies when you fetch them.
+- Anthropic Sans/Mono are proprietary fonts, not bundled here; confirm your own licensing before use.

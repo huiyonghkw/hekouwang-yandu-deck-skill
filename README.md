@@ -65,3 +65,11 @@ git clone git@github.com:huiyonghkw/hekouwang-yandu-deck-skill.git ~/.claude/ski
 - **一键发布**：`python3 publish.py`，MANIFEST 加一行即加一期，CF Pages 干净 URL。
 
 > 配套图文/视频产线见 `hekouwang-content-factory`。
+
+## License
+
+本仓库代码（演示版引擎模板、`publish.py`、`demo.html`、`home.html`、`SKILL.md` 等）以 **MIT** 开源，见 [LICENSE](LICENSE)。注意：
+
+- **`hekouwang-content-factory` 是独立的付费 Skill，其内容不在本仓库**，不受本许可覆盖。
+- 思源黑体/思源宋体（Noto Sans/Serif SC）为 SIL OFL 开源字体，本仓库**不含字体文件**，自行获取时遵循其 OFL。
+- Anthropic Sans/Mono 为专有字体，本仓库不含，使用前自行确认授权。
