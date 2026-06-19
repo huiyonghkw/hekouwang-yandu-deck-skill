@@ -28,7 +28,7 @@
 
 | 依赖 | 关系 | 说明 |
 |---|---|---|
-| **`hekouwang-content-factory`** ⭐ | **内容来源（强依赖）** | 本 Skill 是「**把内容做成翻页演示 + 发布**」的一半；**另一半（生成文章 HTML、视觉规范 V1/V2/V3、去 AI 味、合规红线）在 `hekouwang-content-factory`**。演示版的源 HTML、配色 token、字体方案都源自它。**⚠️ `hekouwang-content-factory` 是付费 Skill**（需向作者 @huiyonghkw 获取授权），本仓库不含其内容。 |
+| **`hekouwang-content-factory`** ⭐ | **内容来源（强依赖）** | 本 Skill 是「**把内容做成翻页演示 + 发布**」的一半；**另一半（生成文章 HTML、视觉规范 V1/V2/V3、去 AI 味、合规红线）在 `hekouwang-content-factory`**。演示版的源 HTML、配色 token、字体方案都源自它。**⚠️ `hekouwang-content-factory` 是付费 Skill**（GitHub 上为 **PRIVATE 私有仓库，非授权无法 clone / 获取**；需向作者 @huiyonghkw 获取授权），本仓库不含其内容。 |
 | Python 3 + `fonttools`+`brotli` | 字体子集化 | 仅发布时需要（`tools/fenv` venv，见 `SKILL.md`）。没有则回退用 `fonts/cache/` 已切好的子集。 |
 | `wrangler`（Cloudflare） | 部署 | `publish.py` 调它发到 CF Pages；首次需 `wrangler login`。 |
 | Anthropic Sans/Mono woff2 | 拉丁/代码字体 | 来自 `hekouwang-content-factory`（自用/演示授权）。缺失则拉丁字自动回退系统字。 |
