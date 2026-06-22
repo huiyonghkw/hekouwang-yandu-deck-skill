@@ -40,8 +40,11 @@ HANDLE = "@huiyonghkw"
 # Anthropic 字体已收进本目录 fonts/src（自包含，不再依赖外部 skill 路径）
 FONT_SRC = SELF / "fonts" / "src"
 FONT_FILES = ["anthropicSans.woff2", "anthropicMono.woff2"]
-# 演示版源 HTML 里内嵌的旧绝对路径（localize 时统一替换成站内 /fonts/）
-FONT_ABS_PREFIX = "/Users/huiyonghkw/.claude/skills/hekouwang-content-factory/assets/fonts/"
+# 演示版源 HTML(content-factory 出品)里内嵌的本地字体路径前缀；localize 时统一替换成站内 /fonts/。
+# 正则同时认两种写法，不写死某台机器/用户名——他机/换目录/不同 skill 路径都认：
+#   ① 任意绝对路径 + /assets/fonts/（模型已把 {{SKILL_DIR}} 替换成真实绝对路径的常态）
+#   ② 未替换的 {{SKILL_DIR}}/assets/fonts/ 占位符（模型拷引擎模板时漏替换的兜底）
+FONT_ABS_RE = re.compile(r"(?:\{\{SKILL_DIR\}\}|/[^\s'\"()]*?)/assets/fonts/")
 
 # 首页源（持久化，改首页改这个；dist/ 每次构建都会被清空）
 HOMEPAGE_SRC = SELF / "home.html"
@@ -159,7 +162,7 @@ SERIES_META = {
 def localize(html: str) -> str:
     """① 本地 Anthropic 字体绝对路径 → 站内 /fonts/；② 自托管思源黑/宋：
     删掉 Google Fonts / loli 外链（preconnect + css2），注入本地 @font-face。"""
-    html = html.replace(FONT_ABS_PREFIX, "/fonts/")
+    html = FONT_ABS_RE.sub("/fonts/", html)
     # 删除字体 preconnect（googleapis / gstatic / loli 任意）
     html = re.sub(r'\s*<link rel="preconnect"[^>]*(?:googleapis|gstatic|loli)[^>]*>', "", html)
     # 第一处 Noto css2 外链 → 本地 @font-face；其余同类外链删除

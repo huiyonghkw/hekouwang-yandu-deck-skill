@@ -4,6 +4,14 @@ description: >
   会勇禾口王的AI笔记 ·「演读 DECK」沉浸式演示产线与发布 Skill。把一篇文章/选题做成「一屏一镜、可翻页、能自动播放」的 keynote 演示版网页（暖黑 或 米白 两套主色），并自托管字体、发布到 Cloudflare Pages（hekouwang.pages.dev）。
   当需要：① 把某篇文章/某期内容做成「演示版 / 演读 DECK / 翻页演示 / keynote 网页 / 沉浸式阅读页」；② 给「演读 DECK」站加一期演示、加一个系列、改首页；③ 发布/更新 hekouwang.pages.dev；④ 自托管字体、解决首屏字重跳变(FOUT)、子集化思源字体 时使用。
   触发词：演读DECK / 演读 deck / 演示版 / 翻页演示 / keynote 网页 / 沉浸式阅读 / 发布到 hekouwang / 加一期演示 / 演示版引擎。
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - AskUserQuestion
 ---
 
 # 演读 DECK · 沉浸式演示产线与发布
@@ -36,6 +44,8 @@ description: >
 
 样板：`reference/deck-engine-暖黑.html`（数据/财经/科普暗调）、`reference/deck-engine-米白.html`（人文/方法论亮调）。
 **做新 EP = 拷一份对应主色的模板，`<head>` 的全部 CSS 和 `</main>` 之后的全部 `<script>` 逐字保留，只换内容 slide / 顶栏标签 / title / 片尾。** 引擎已实现：
+
+> ⚠️ 模板 `@font-face` 里的字体路径是占位符 `{{SKILL_DIR}}/assets/fonts/...`——指向兄弟 skill `hekouwang-content-factory` 的字体。拷模板做 EP 时**把 `{{SKILL_DIR}}` 替换成 content-factory 的绝对 Base directory**（本地预览/截图才有字体）。发布时 `publish.py` 会把它统一收成站内 `/fonts/`，万一漏替换也能兜底。
 
 - 全屏 `.slide`（一屏一镜），`.stage` 居中 + JS `fit()` 等比缩放防裁切；
 - 导航：←/→/空格/点击/触屏滑动/底部圆点/Home/End/F 全屏；右下「▶ 自动播放」(7s/屏，像放视频)；顶部进度条 + `NN/总数`；`#N` 深链（可分享到某屏）；`prefers-reduced-motion` 自动关动画。
