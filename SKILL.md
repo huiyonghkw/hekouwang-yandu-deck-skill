@@ -34,7 +34,12 @@ allowed-tools:
 └── README.md
 ```
 
-本 Skill 的 `reference/` 里带了**可移植副本**：`deck-engine-暖黑.html` / `deck-engine-米白.html`（两套引擎模板）、`publish.py`、`home.html`、`系统说明.md`。新项目落地时拷过去即可。
+本 Skill 按官方约定分目录带了**可移植副本**（新项目落地时拷过去）：
+- `assets/templates/deck-engine-暖黑.html` / `deck-engine-米白.html`（两套引擎模板，按 EP 拷进内容目录）、`assets/templates/home.html`（首页源）
+- `scripts/publish.py`（发布脚本）
+- `references/系统说明.md`（系统说明文档）、`examples/demo.html`（零依赖最小示例）
+
+> ⚠️ **`scripts/publish.py` 与 `assets/templates/home.html` 在实际项目里必须同目录**——落地时把这两个一起拷进项目根的 `演读DECK/`（`publish.py` 用 `SELF/home.html` 找首页源）。
 
 ## 1. 把文章做成「演示版 deck」⭐ 核心
 
@@ -42,7 +47,7 @@ allowed-tools:
 
 ### 1.1 引擎（照抄模板，别重写）
 
-样板：`reference/deck-engine-暖黑.html`（数据/财经/科普暗调）、`reference/deck-engine-米白.html`（人文/方法论亮调）。
+样板：`assets/templates/deck-engine-暖黑.html`（数据/财经/科普暗调）、`assets/templates/deck-engine-米白.html`（人文/方法论亮调）。
 **做新 EP = 拷一份对应主色的模板，`<head>` 的全部 CSS 和 `</main>` 之后的全部 `<script>` 逐字保留，只换内容 slide / 顶栏标签 / title / 片尾。** 引擎已实现：
 
 > ⚠️ 模板 `@font-face` 里的字体路径是占位符 `{{SKILL_DIR}}/assets/fonts/...`——指向兄弟 skill `hekouwang-content-factory` 的字体。拷模板做 EP 时**把 `{{SKILL_DIR}}` 替换成 content-factory 的绝对 Base directory**（本地预览/截图才有字体）。发布时 `publish.py` 会把它统一收成站内 `/fonts/`，万一漏替换也能兜底。
@@ -114,6 +119,6 @@ python3 演读DECK/publish.py --build-only # 只构建 dist/，不部署
 7. 截图核验演示版给足时间（`--virtual-time-budget=5000`），让 fit/动画跑完再截。
 
 ## 配套与依赖
-- **内容产线（强依赖）：`hekouwang-content-factory`**——演示版的源文章 HTML、视觉规范(V1/V2/V3)、配色 token、字体方案都来自它；本 Skill 只做「内容→翻页演示+发布」这一半。**⚠️ 它是付费 Skill**（需作者授权），仓库不含其内容。只用引擎可直接拷 `reference/deck-engine-*.html`（零依赖独立可用）。
-- 示例：`reference/demo.html`（自包含、零依赖、双击即看的最小动画示例）。
+- **内容产线（强依赖）：`hekouwang-content-factory`**——演示版的源文章 HTML、视觉规范(V1/V2/V3)、配色 token、字体方案都来自它；本 Skill 只做「内容→翻页演示+发布」这一半。**⚠️ 它是付费 Skill**（需作者授权），仓库不含其内容。只用引擎可直接拷 `assets/templates/deck-engine-*.html`（零依赖独立可用）。
+- 示例：`examples/demo.html`（自包含、零依赖、双击即看的最小动画示例）。
 - 记忆：`keynote-yanshi-site`（站点现状 + 发布链路）、`keynote-deck-engine`（引擎做法）、`brand-persona-tagline`（人设三句）。

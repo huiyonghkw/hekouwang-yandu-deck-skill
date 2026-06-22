@@ -8,6 +8,14 @@
 
 ---
 
+## [1.0.1]
+
+### 变更
+- **目录结构对齐官方 `anthropics/skills` 约定**：原先所有可移植副本都堆在 `reference/`（单数、且混入可执行脚本）。
+  现按官方分目录——`scripts/publish.py`、`assets/templates/{deck-engine-暖黑,deck-engine-米白,home}.html`、
+  `references/系统说明.md`、`examples/demo.html`。SKILL.md / README(中英) 的指针与结构树同步更新。
+  注：`scripts/publish.py` 与 `assets/templates/home.html` 落地时仍须拷进同一个 `演读DECK/`（publish.py 用 `SELF/home.html` 找首页源），文档已注明。
+
 ## [1.0.0]
 
 首个有记录的版本（此前以 git 历史维护，无 CHANGELOG）。

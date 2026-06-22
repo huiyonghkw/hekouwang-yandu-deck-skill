@@ -10,7 +10,7 @@ Live example: **https://hekouwang.pages.dev**
 
 ## Demo
 
-Fastest way to feel it — double-click **[`reference/demo.html`](reference/demo.html)**: a **self-contained, zero-dependency, system-font** minimal example. Just open it via `file://` to see the engine animate (paging / auto-play / bars growing / numbers counting up / lines drawing / staggered cards).
+Fastest way to feel it — double-click **[`examples/demo.html`](examples/demo.html)**: a **self-contained, zero-dependency, system-font** minimal example. Just open it via `file://` to see the engine animate (paging / auto-play / bars growing / numbers counting up / lines drawing / staggered cards).
 
 | Cover (count-up + gradient title) | Flow slide (nodes fade in + arrows draw + stat pop) |
 |---|---|
@@ -20,7 +20,7 @@ Fastest way to feel it — double-click **[`reference/demo.html`](reference/demo
   - Home: <https://hekouwang.pages.dev>
   - Dark series: <https://hekouwang.pages.dev/suanli/ep01> (`#3` jumps to slide 3)
   - Light series: <https://hekouwang.pages.dev/toushi/ep01>
-- `reference/deck-engine-暖黑.html` / `deck-engine-米白.html` are the two **full engine templates** (serve locally to load fonts: `python3 -m http.server`).
+- `assets/templates/deck-engine-暖黑.html` / `deck-engine-米白.html` are the two **full engine templates** (serve locally to load fonts: `python3 -m http.server`).
 
 ## Dependencies
 
@@ -31,22 +31,27 @@ Fastest way to feel it — double-click **[`reference/demo.html`](reference/demo
 | `wrangler` (Cloudflare) | Deploy | `publish.py` calls it to deploy to CF Pages; first run needs `wrangler login`. |
 | Anthropic Sans/Mono woff2 | Latin / mono fonts | From `hekouwang-content-factory` (self-use / demo license). If absent, Latin text falls back to system fonts. |
 
-> Want just the **engine** (not the content pipeline)? Copy `reference/deck-engine-*.html` as a template and fill in your content — that part is zero-dependency and stands alone.
+> Want just the **engine** (not the content pipeline)? Copy `assets/templates/deck-engine-*.html` as a template and fill in your content — that part is zero-dependency and stands alone.
 
 ## What is this
 
-A Claude Code **Skill**. `SKILL.md` is the method doc the agent reads; `reference/` holds ready-to-copy templates and scripts.
+A Claude Code **Skill**, organized per the official `anthropics/skills` convention. `SKILL.md` is the method doc the agent reads; `scripts/` `assets/` `references/` `examples/` hold ready-to-copy scripts, templates, docs and samples.
 
 ```
-SKILL.md                       # method + triggers + gotchas (agent entry point)
-reference/
-├── deck-engine-暖黑.html       # deck engine template (dark — data / finance / explainer)
-├── deck-engine-米白.html       # deck engine template (light — editorial / methodology)
-├── demo.html                  # self-contained zero-dep animated example
-├── publish.py                 # build dist/ → deploy to CF Pages (no 3rd-party deps)
-├── home.html                  # homepage template
-└── 系统说明.md                 # system notes (zh)
+SKILL.md                              # method + triggers + gotchas (agent entry point)
+scripts/
+└── publish.py                       # build dist/ → deploy to CF Pages (no 3rd-party deps)
+assets/templates/
+├── deck-engine-暖黑.html             # deck engine template (dark — data / finance / explainer)
+├── deck-engine-米白.html             # deck engine template (light — editorial / methodology)
+└── home.html                        # homepage template
+references/
+└── 系统说明.md                       # system notes (zh)
+examples/
+└── demo.html                        # self-contained zero-dep animated example
 ```
+
+> Placement rule: copy `scripts/publish.py` and `assets/templates/home.html` into the **same** `演读DECK/` dir in your project (publish.py resolves the homepage via `SELF/home.html`).
 
 ## Install
 

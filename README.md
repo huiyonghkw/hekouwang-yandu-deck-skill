@@ -12,7 +12,7 @@
 
 ## 示例动画版本 / Demo
 
-最快的体验方式 —— 双击打开 **[`reference/demo.html`](reference/demo.html)**：一个**自包含、零依赖、系统字体**的最小示例，直接 `file://` 打开就能看引擎怎么动（翻页 / 自动播放 / 柱子生长 / 数字滚动 / 折线描线 / 卡片错峰）。
+最快的体验方式 —— 双击打开 **[`examples/demo.html`](examples/demo.html)**：一个**自包含、零依赖、系统字体**的最小示例，直接 `file://` 打开就能看引擎怎么动（翻页 / 自动播放 / 柱子生长 / 数字滚动 / 折线描线 / 卡片错峰）。
 
 | 封面（数字滚动 + 标题渐变） | 流程屏（节点淡入 + 箭头描线 + stat 弹入） |
 |---|---|
@@ -22,7 +22,7 @@
   - 首页：<https://hekouwang.pages.dev>
   - 暖黑系列：<https://hekouwang.pages.dev/suanli/ep01>（`#3` 直达第 3 屏）
   - 米白系列：<https://hekouwang.pages.dev/toushi/ep01>
-- `reference/deck-engine-暖黑.html` / `deck-engine-米白.html` 是两套**完整引擎模板**（需起本地服务器看字体：`python3 -m http.server`）。
+- `assets/templates/deck-engine-暖黑.html` / `deck-engine-米白.html` 是两套**完整引擎模板**（需起本地服务器看字体：`python3 -m http.server`）。
 
 ## 依赖
 
@@ -33,21 +33,27 @@
 | `wrangler`（Cloudflare） | 部署 | `publish.py` 调它发到 CF Pages；首次需 `wrangler login`。 |
 | Anthropic Sans/Mono woff2 | 拉丁/代码字体 | 来自 `hekouwang-content-factory`（自用/演示授权）。缺失则拉丁字自动回退系统字。 |
 
-> 只想用**引擎**（不要内容产线）：直接拷 `reference/deck-engine-*.html` 当模板填内容即可，那部分零依赖、可独立使用。
+> 只想用**引擎**（不要内容产线）：直接拷 `assets/templates/deck-engine-*.html` 当模板填内容即可，那部分零依赖、可独立使用。
 
 ## 这是什么
 
-这是一个 [Claude Code](https://claude.com/claude-code) **Skill**。`SKILL.md` 是给 Agent 读的方法说明；`reference/` 是可直接拷用的模板与脚本。
+这是一个 [Claude Code](https://claude.com/claude-code) **Skill**，按官方 `anthropics/skills` 约定分目录组织。`SKILL.md` 是给 Agent 读的方法说明；`scripts/` `assets/` `references/` `examples/` 是可直接拷用的脚本、模板、文档与示例。
 
 ```
-SKILL.md                       # 方法 + 触发词 + 防踩坑（Agent 入口）
-reference/
-├── deck-engine-暖黑.html       # 演示版引擎模板（数据/财经/科普暗调）
-├── deck-engine-米白.html       # 演示版引擎模板（人文/方法论亮调）
-├── publish.py                 # 构建 dist/ → 部署 CF Pages（零三方依赖）
-├── home.html                  # 首页模板
-└── 系统说明.md
+SKILL.md                              # 方法 + 触发词 + 防踩坑（Agent 入口）
+scripts/
+└── publish.py                       # 构建 dist/ → 部署 CF Pages（零三方依赖）
+assets/templates/
+├── deck-engine-暖黑.html             # 演示版引擎模板（数据/财经/科普暗调）
+├── deck-engine-米白.html             # 演示版引擎模板（人文/方法论亮调）
+└── home.html                        # 首页模板
+references/
+└── 系统说明.md                       # 系统说明文档
+examples/
+└── demo.html                        # 零依赖最小示例（双击即看）
 ```
+
+> 落地铁律：`scripts/publish.py` 与 `assets/templates/home.html` 拷进项目时必须放进同一个 `演读DECK/`（publish.py 用 `SELF/home.html` 找首页源）。
 
 ## 安装
 
