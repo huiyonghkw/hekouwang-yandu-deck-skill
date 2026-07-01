@@ -54,6 +54,7 @@ allowed-tools:
 
 - 全屏 `.slide`（一屏一镜），`.stage` 居中 + JS `fit()` 等比缩放防裁切；
 - 导航：←/→/空格/点击/触屏滑动/底部圆点/Home/End/F 全屏；右下「▶ 自动播放」(7s/屏，像放视频)；顶部进度条 + `NN/总数`；`#N` 深链（可分享到某屏）；`prefers-reduced-motion` 自动关动画。
+- **S 放映 / 提词器**（讲者视图：计时器 + 当前镜逐字稿 + 下一镜预览，详见 §1.6）。模板已内置该模块，拷模板即带。
 
 ### 1.2 进场动画钩子（只加 class + `--i` 递增控错峰，CSS 已定义）
 
@@ -82,6 +83,19 @@ allowed-tools:
 ### 1.5 批量做（多 EP）
 
 引擎相同、只内容不同 → 并行开多个 subagent，每个给「对应主色模板路径 + 源文章路径 + 本节规则」，要求 `<head>`CSS 与 `<script>`JS 与模板**逐字一致**，只换内容、按源文追加专属组件 CSS（滑块/时间线/对比/桥…，改用模板的 token）。产出后主控用 headless Chrome 截图核验各图表屏（`--virtual-time-budget=5000` 让动画跑完）。
+
+## 1.6 放映 / 提词器（讲 + 录 双用）⭐
+
+模块：`assets/presenter/presenter-module.html`（自包含 `<style>+<div>+<script>`，已注入两套引擎模板与 `examples/demo.html`，**拷模板即带，无需改引擎**）。
+
+- **按 `S`** 开「讲者视图」：**独立窗口**（计时器 + 当前镜逐字稿 + 下一镜预览），主屏与讲者窗靠 **BroadcastChannel 双向同步**——**主屏保持干净，可投影 / 录屏**。弹窗被拦（或无 BroadcastChannel）时自动回退为页内全屏浮层（单屏排练也能用）。
+- **真·双屏**：把 deck 在第二显示器再开一个窗口、地址后加 `?speaker=1` 即变讲者窗，免弹窗。讲者窗可**反向遥控主屏**：在讲者窗按 `←/→` 翻镜、`P` 计时、`R` 归零、`Esc/S` 关（靠向主屏引擎派发方向键事件，不改引擎）。
+- **键位**：`S` 开/关 · `P` 计时启停 · `R` 归零 · `Esc` 关 · `←/→` 翻镜（主屏与讲者窗都认）。
+- **逐字稿 = 配音 / 口播脚本**：在每张 `.slide` 里加 `<div class="notes">这一镜要讲的话…</div>`（观众/录屏**永不可见**，模块强制 `display:none`）。这份 notes 同时就是该镜的口播稿——录屏时主屏放干净 deck、讲者窗当提词器照念；也可直接喂 TTS（云扬）。
+- 取数靠 `#deck .slide` 的 `.active` class（`MutationObserver` 监听），与引擎解耦；无 `.notes` 的镜回退显示标题。讲者信号用 `window.name`/`?speaker`（**不用 `#speaker`**——引擎深链 `replaceState('#N')` 会把 hash 冲掉）。
+- ⚠️ 本地 `file://` 双击时 `window.open` 可能被拦、且 BroadcastChannel 跨窗不通（opaque origin）——**用 `python3 -m http.server` 起本地服务**预览（与字体本地化要求一致）；发布到 CF Pages(https) 后正常。
+
+> 一图一镜 + 每镜一段 notes ⇒ 写完 deck 就同时有了「演示稿 + 提词器 + 口播稿」三合一。
 
 ## 2. 首页 `home.html`
 
