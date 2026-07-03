@@ -35,7 +35,7 @@ allowed-tools:
 ```
 
 本 Skill 按官方约定分目录带了**可移植副本**（新项目落地时拷过去）：
-- `assets/templates/deck-engine-暖黑.html` / `deck-engine-米白.html`（两套引擎模板，按 EP 拷进内容目录）、`assets/templates/home.html`（首页源）
+- `assets/templates/deck-engine-暖黑.html` / `deck-engine-米白.html` / `deck-engine-V6焰彩白.html`（三套引擎模板，按 EP 拷进内容目录）、`assets/templates/home.html`（首页源）
 - `scripts/publish.py`（发布脚本）
 - `references/系统说明.md`（系统说明文档）、`examples/demo.html`（零依赖最小示例）
 
@@ -47,7 +47,7 @@ allowed-tools:
 
 ### 1.1 引擎（照抄模板，别重写）
 
-样板：`assets/templates/deck-engine-暖黑.html`（数据/财经/科普暗调）、`assets/templates/deck-engine-米白.html`（人文/方法论亮调）。
+样板：`assets/templates/deck-engine-暖黑.html`（数据/财经/科普暗调）、`assets/templates/deck-engine-米白.html`（人文/方法论亮调）、`assets/templates/deck-engine-V6焰彩白.html`（V6 焰彩白亮调：紫主色+焰橙/粉，Mozilla 可变字体，国标/发布感选题用；`publish.py` 已支持 Mozilla 字体打包）。
 **做新 EP = 拷一份对应主色的模板，`<head>` 的全部 CSS 和 `</main>` 之后的全部 `<script>` 逐字保留，只换内容 slide / 顶栏标签 / title / 片尾。** 引擎已实现：
 
 > ⚠️ 模板 `@font-face` 里的字体路径是占位符 `{{SKILL_DIR}}/assets/fonts/...`——指向兄弟 skill `hekouwang-content-factory` 的字体。拷模板做 EP 时**把 `{{SKILL_DIR}}` 替换成 content-factory 的绝对 Base directory**（本地预览/截图才有字体）。发布时 `publish.py` 会把它统一收成站内 `/fonts/`，万一漏替换也能兜底。
