@@ -1,5 +1,6 @@
 ---
 name: hekouwang-yandu-deck-skill
+version: 1.1.0
 description: >
   会勇禾口王的AI笔记 ·「演读 DECK」沉浸式演示产线与发布 Skill。把一篇文章/选题做成「一屏一镜、可翻页、能自动播放」的 keynote 演示版网页（暖黑 或 米白 两套主色），并自托管字体、发布到 Cloudflare Pages（hekouwang.pages.dev）。
   当需要：① 把某篇文章/某期内容做成「演示版 / 演读 DECK / 翻页演示 / keynote 网页 / 沉浸式阅读页」；② 给「演读 DECK」站加一期演示、加一个系列、改首页；③ 发布/更新 hekouwang.pages.dev；④ 自托管字体、解决首屏字重跳变(FOUT)、子集化思源字体 时使用。
