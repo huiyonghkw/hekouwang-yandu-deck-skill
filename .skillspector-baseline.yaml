@@ -1,0 +1,70 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 1
+rules: []
+fingerprints:
+- hash: sha256:416cec00c20ae5f7
+  rule_id: AST4
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:ed5fa0550717714d
+  rule_id: AST4
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:15ede2a6a7efc363
+  rule_id: AST4
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:7f97684801b027ac
+  rule_id: AST4
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:5c4952434312f828
+  rule_id: AST4
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:b0faad6ed48e7091
+  rule_id: LP1
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:bcec61f3aef39c09
+  rule_id: MP2
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:3c388ffb9de40e80
+  rule_id: OH1
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:9ba3112615f4b780
+  rule_id: OH1
+  file: scripts/publish.py
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:c2c0f010bdb2ea8a
+  rule_id: PE3
+  file: "references/\u7559\u8A00\u677F-D1.md"
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:d0248afe7d233e8b
+  rule_id: P2
+  file: "assets/templates/deck-engine-V6\u7130\u5F69\u767D.html"
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:b736e9d9d1aa2563
+  rule_id: P2
+  file: "assets/templates/deck-engine-\u6696\u9ED1.html"
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
+- hash: sha256:8b4fe6d003444781
+  rule_id: P2
+  file: "assets/templates/deck-engine-\u7C73\u767D.html"
+  reason: "2026-07-15 \u9010\u6761\u7FFB\u6E90\u7801\u6838\u5B9E\u4E3A\u8BEF\u62A5\
+    \uFF1B\u89C1 skill-doctor SKILL.md 2b \u8BEF\u62A5\u6837\u672C\u8868"
