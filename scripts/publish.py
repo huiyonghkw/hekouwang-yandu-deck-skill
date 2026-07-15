@@ -29,7 +29,7 @@ from pathlib import Path
 
 # ---------------------------------------------------------------------------
 SELF = Path(__file__).resolve().parent                # 演读DECK/（发布系统自身目录，自包含）
-ROOT = SELF.parent                                    # 项目根 Pi.dev/（MANIFEST 里演示版源的基准）
+ROOT = SELF.parent                                    # 项目根（MANIFEST 里演示版源路径的基准）
 OUT = SELF / "dist"                                   # 构建产物 = 部署到 CF Pages 的目录
 CF_PROJECT = "hekouwang"              # *.pages.dev 前缀 → hekouwang.pages.dev
 SITE_TITLE = "演读 DECK"
@@ -40,10 +40,13 @@ HANDLE = "@huiyonghkw"
 # Anthropic 字体已收进本目录 fonts/src（自包含，不再依赖外部 skill 路径）
 FONT_SRC = SELF / "fonts" / "src"
 FONT_FILES = ["anthropicSans.woff2", "anthropicMono.woff2"]
-# 演示版源 HTML(content-factory 出品)里内嵌的本地字体路径前缀；localize 时统一替换成站内 /fonts/。
+# V6 焰彩白引擎用的 Mozilla 可变字体（拉丁，小体积、无需子集化，整包打进 dist/fonts/）
+MOZILLA_FILES = ["MozillaHeadline-Variable.woff2", "MozillaText-Variable.woff2"]
+# 演示版源 HTML(content-factory 出品)里内嵌的本地字体路径；localize 时统一替换成站内 /fonts/。
 # 正则同时认两种写法，不写死某台机器/用户名——他机/换目录/不同 skill 路径都认：
 #   ① 任意绝对路径 + /assets/fonts/（模型已把 {{SKILL_DIR}} 替换成真实绝对路径的常态）
 #   ② 未替换的 {{SKILL_DIR}}/assets/fonts/ 占位符（模型拷引擎模板时漏替换的兜底）
+# 覆盖 Anthropic + Mozilla 两族字体。
 FONT_ABS_RE = re.compile(r"(?:\{\{SKILL_DIR\}\}|/[^\s'\"()]*?)/assets/fonts/")
 
 # 首页源（持久化，改首页改这个；dist/ 每次构建都会被清空）
@@ -77,6 +80,13 @@ PRELOAD_LINKS = (
     '<link rel="preload" href="/fonts/anthropicSans.woff2" as="font" type="font/woff2" crossorigin>'
     '<link rel="preload" href="/fonts/anthropicMono.woff2" as="font" type="font/woff2" crossorigin>'
 )
+# V6 焰彩白页面的预加载（Mozilla 可变字体 + 思源，无 Anthropic）
+PRELOAD_LINKS_V6 = (
+    '<link rel="preload" href="/fonts/NotoSansSC-900.woff2" as="font" type="font/woff2" crossorigin>'
+    '<link rel="preload" href="/fonts/NotoSansSC-400.woff2" as="font" type="font/woff2" crossorigin>'
+    '<link rel="preload" href="/fonts/MozillaHeadline-Variable.woff2" as="font" type="font/woff2" crossorigin>'
+    '<link rel="preload" href="/fonts/MozillaText-Variable.woff2" as="font" type="font/woff2" crossorigin>'
+)
 # Cloudflare Pages 静态头：字体强缓存（子集名稳定，改字体时极少；一周缓存够稳又不至于太僵）
 HEADERS_FILE = "/fonts/*\n  Cache-Control: public, max-age=604800, stale-while-revalidate=86400\n"
 
@@ -96,57 +106,103 @@ FONT_MIRRORS = {
 # 发布清单:(源演示版 相对 ROOT, slug, 系列, EP标签, 分类, 标题, 一句话简介, 屏数)
 MANIFEST = [
     (
-        "算力账本/EP01-把算力当电卖/EP01-演示版.html",
+        "EP-智能体互联国标系列/序篇-全景与三协议/序篇-演示版.html",
+        "guobiao/xu", "智能体互联国标", "序篇", "全景 · OVERVIEW",
+        "全球第一份「智能体互联」国标，到底定了什么",
+        "GB/Z 185 七部分原文读完：它和 MCP／A2A／ANP 什么关系，最不一样的一刀切在身份。",
+        17,
+    ),
+    (
+        "EP-智能体互联国标系列/EP01-总体架构/EP01-演示版.html",
+        "guobiao/ep01", "智能体互联国标", "EP01", "总体架构 · ARCHITECTURE",
+        "智能体要互联，先过哪五道关",
+        "185.1 总体架构：五域十接口一条闭环，用一次「订会议室」走通身份→工具全链路。",
+        17,
+    ),
+    (
+        "EP-算力账本/EP01-把算力当电卖/EP01-演示版.html",
         "suanli/ep01", "算力账本", "EP01", "入门 · BASICS",
         "算力、Token，到底是什么？",
         "把算力当成“电”、Token 当成“电表度数”，零基础也能跟上的第一课。",
         18,
     ),
     (
-        "算力账本/EP02-Token越便宜越紧张/EP02-演示版.html",
+        "EP-算力账本/EP02-Token越便宜越紧张/EP02-演示版.html",
         "suanli/ep02", "算力账本", "EP02", "Token 经济学 · TOKEN",
         "AI 越用越便宜，算力为什么反而不够用？",
         "价格越低、总需求越疯——一笔算力供需的反直觉账。",
         24,
     ),
     (
-        "算力账本/EP03-算力租赁的回本账/EP03-演示版.html",
+        "EP-算力账本/EP03-算力租赁的回本账/EP03-演示版.html",
         "suanli/ep03", "算力账本", "EP03", "算力租赁经济学 · LEASING",
         "一张几十万的卡，多久能租回本？",
         "算力租赁的回本账，一笔笔拆给你看。",
         19,
     ),
     (
-        "算力账本/EP3.5-一度电能吐多少Token/EP3.5-演示版.html",
+        "EP-算力账本/EP3.5-一度电能吐多少Token/EP3.5-演示版.html",
         "suanli/ep35", "算力账本", "EP3.5", "能耗账 · ENERGY",
         "一度电，能吐多少 Token？",
         "从瓦特到 Token，把 AI 的能耗账算明白。",
         22,
     ),
     (
-        "偷师AI大佬/EP01-Dario只管一个人/EP01-演示版.html",
+        "EP-算力账本/EP04-推理比训练更烧钱/EP04-演示版.html",
+        "suanli/ep04", "算力账本", "EP04", "推理经济学 · INFERENCE",
+        "训练烧一次，推理烧一辈子",
+        "AI 进千家万户，烧钱的重心正从训练倒向推理——一笔成本反转的账。",
+        20,
+    ),
+    (
+        "EP-偷师AI大佬/EP01-Dario只管一个人/EP01-演示版.html",
         "toushi/ep01", "偷师AI大佬", "EP01", "管理 · DARIO",
         "只管一个人的 CEO",
         "Dario 只有 1 个直接下属——把执行委托出去，把判断收回自己。",
         10,
     ),
     (
-        "偷师AI大佬/EP02-Karpathy把代码交给AI/EP02-演示版.html",
+        "EP-偷师AI大佬/EP02-Karpathy把代码交给AI/EP02-演示版.html",
         "toushi/ep02", "偷师AI大佬", "EP02", "编程 · KARPATHY",
         "把代码交给 AI 的教父",
         "Karpathy 自宣 99% 不写代码——从亲手做，到编排 + 监督。",
         18,
     ),
     (
-        "偷师AI大佬/EP03-Demis研究品味/EP03-演示版.html",
+        "EP-偷师AI大佬/EP03-Demis研究品味/EP03-演示版.html",
         "toushi/ep03", "偷师AI大佬", "EP03", "品味 · DEMIS",
         "诺奖得主说：真正稀缺的是品味",
         "执行交给 AI 之后，判断和品味怎么练。",
         13,
     ),
+    (
+        "EP-偷师AI大佬/专题-读懂大佬的AI喊话/演示版.html",
+        "toushi/zhuanti-dario", "偷师AI大佬", "专题", "真话 · DARIO",
+        "AI 大佬的真话，没被剪辑前是什么样",
+        "Dario 完整 70 分钟访谈、51 问答一句不删——让你看清 AI 世界到底在说什么。",
+        56,
+    ),
+    (
+        "EP-Harness工程系列/EP05下集-该用MCP还是CLI/演示版.html",
+        "harness/ep05x", "Harness 工程", "EP05·下集", "工具 · TOOLS",
+        "该用 MCP，还是直接敲命令（CLI）",
+        "都说抛弃 MCP 转 CLI，其实吵错了轴：登记层归 MCP、执行层归代码执行，一张两轴图讲清。",
+        17,
+    ),
+    (
+        "EP-出行SaaS工程手记/EP01-一份代码变100个小程序/EP01-演示版.html",
+        "saas/ep01", "出行SaaS工程手记", "EP01", "多租户 · SAAS",
+        "一份代码，怎么变成 100 个商户各自的小程序",
+        "微信「代运营」把复杂度的乘法改写成一条平线：授权令牌链 + 9 步代发布流水线 + 边际成本趋零，再让 AI 把它压到一个人扛得住。",
+        21,
+    ),
 ]
 
 SERIES_META = {
+    "智能体互联国标": {
+        "en": "AGENT INTERCONNECTION · GB/Z 185",
+        "dek": "全球第一份「智能体互联」国标 GB/Z 185，七部分一集集讲成人话。",
+    },
     "算力账本": {
         "en": "COMPUTE LEDGER",
         "dek": "用记账的方式，把 AI 背后的算力与 Token 经济学讲清楚。",
@@ -155,14 +211,39 @@ SERIES_META = {
         "en": "STEAL THE PLAYBOOK",
         "dek": "从 AI 大佬身上，偷一个普通人明天就能用的方法。",
     },
+    "Harness 工程": {
+        "en": "HARNESS ENGINEERING",
+        "dek": "模型会说话之外，让它真会干活的「模型外面那层」——循环、工具、子代理，一集一个部件拆给你看。",
+    },
+    "出行SaaS工程手记": {
+        "en": "RIDE-SAAS · FIELD NOTES",
+        "dek": "面向企业出行的多租户 SaaS，怎么用一份代码服务一百个商户——真实项目里的架构、踩坑与 AI 协作，一期一个战场。",
+    },
 }
 
 
 # ---------------------------------------------------------------------------
+# ── Cloudflare Web Analytics beacon ──────────────────────────────────
+# 每页注入（deck 走 build()、首页走 copy_home()，都过 localize()，一处即全站）。
+# 意义：爬虫不执行 JS → 这个数字天然把机器人筛掉，是「真人有没有来」的唯一可信口径。
+#   （对照：CF「帐户分析/流量概览」统计的是边缘请求数，机器人全算进去，会虚高几十倍。）
+# token 是公开的客户端标识（本来就明文出现在页面里），非密钥，入库无风险。
+# ⚠️ static.cloudflareinsights.com 国内可能加载失败 → CN 真人会被少计。
+#    别把它当唯一真相源；判断国内真人另看留言板 D1 / 公众号后台。
+# ⚠️ 落地新项目时把 token 换成你自己的（CF 控制台 → Web Analytics → 添加站点后拿）。
+#    留空则不注入 beacon（不想统计、或还没建站时的默认）。
+CF_BEACON_TOKEN = ""   # ← 填你自己的 Web Analytics token
+CF_BEACON = ("""<!-- Cloudflare Web Analytics --><script type='module' """
+             """src='https://static.cloudflareinsights.com/beacon.min.js' """
+             f"""data-cf-beacon='{{"token": "{CF_BEACON_TOKEN}"}}'>"""
+             """</script><!-- End Cloudflare Web Analytics -->""") if CF_BEACON_TOKEN else ""
+
+
 def localize(html: str) -> str:
     """① 本地 Anthropic 字体绝对路径 → 站内 /fonts/；② 自托管思源黑/宋：
-    删掉 Google Fonts / loli 外链（preconnect + css2），注入本地 @font-face。"""
-    html = FONT_ABS_RE.sub("/fonts/", html)
+    删掉 Google Fonts / loli 外链（preconnect + css2），注入本地 @font-face；
+    ③ 注入 Cloudflare Web Analytics beacon（真人流量统计）。"""
+    html = FONT_ABS_RE.sub("/fonts/", html)   # 通配收编 Anthropic + Mozilla 绝对路径
     # 删除字体 preconnect（googleapis / gstatic / loli 任意）
     html = re.sub(r'\s*<link rel="preconnect"[^>]*(?:googleapis|gstatic|loli)[^>]*>', "", html)
     # 第一处 Noto css2 外链 → 本地 @font-face；其余同类外链删除
@@ -170,10 +251,148 @@ def localize(html: str) -> str:
                       FONT_FACE_CJK, html, count=1)
     if n:
         html = re.sub(r'<link href="https://[^"]*/css2\?family=Noto[^"]*"[^>]*>', "", html)
-    # 关键字体预加载（插到 <head> 最前，避免首屏字重跳变）
+    # 关键字体预加载（插到 <head> 最前，避免首屏字重跳变）；V6 页面用 Mozilla 预加载
     if "rel=\"preload\"" not in html:
-        html = html.replace("<head>", "<head>" + PRELOAD_LINKS, 1)
+        pl = PRELOAD_LINKS_V6 if "Mozilla" in html else PRELOAD_LINKS
+        html = html.replace("<head>", "<head>" + pl, 1)
+    # Web Analytics beacon（放 </body> 前，type=module 天然 defer，不挡首屏）
+    if "cloudflareinsights" not in html:
+        html = (html.replace("</body>", CF_BEACON + "\n</body>", 1)
+                if "</body>" in html else html + CF_BEACON)
     return html
+
+
+# ── 每期 deck 的悬浮留言面板 ──────────────────────────────────────────
+# deck 是全屏翻页(body 不滚动),留言板做成右侧把手 + 滑出面板(暗色玻璃,自适应暗/亮 deck)。
+# 自包含、类名 hkwc- 前缀防冲突、字体走系统栈。__PAGE_KEY__/__PAGE_TITLE__ 按期替换。
+COMMENT_WIDGET = r"""
+<style>
+.hkwc-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:9990;
+  writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.28em;
+  background:rgba(224,138,95,.92);color:#231a14;font:700 13px/1 -apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif;
+  border:none;border-radius:12px 0 0 12px;padding:15px 9px;cursor:pointer;box-shadow:-3px 0 16px rgba(0,0,0,.28);
+  transition:padding .2s,background .2s}
+.hkwc-tab:hover{padding-right:13px;background:#e08a5f}
+.hkwc-tab .n{writing-mode:horizontal-tb;display:inline-block;margin-top:8px;font-size:11px;opacity:.85}
+.hkwc-ov{position:fixed;inset:0;z-index:9998;background:rgba(8,8,10,.55);backdrop-filter:blur(3px);
+  opacity:0;visibility:hidden;transition:opacity .28s,visibility .28s}
+.hkwc-ov.on{opacity:1;visibility:visible}
+.hkwc-panel{position:fixed;top:0;right:0;bottom:0;z-index:9999;width:min(430px,92vw);
+  display:flex;flex-direction:column;background:#1a1917;color:#f4f2eb;
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans SC',system-ui,sans-serif;
+  border-left:1px solid rgba(244,242,235,.12);box-shadow:-14px 0 44px rgba(0,0,0,.5);
+  transform:translateX(100%);transition:transform .32s cubic-bezier(.22,.61,.36,1)}
+.hkwc-ov.on .hkwc-panel{transform:none}
+.hkwc-hd{padding:20px 22px 14px;border-bottom:1px solid rgba(244,242,235,.09);flex:0 0 auto}
+.hkwc-hd .en{font:700 10px/1 ui-monospace,monospace;letter-spacing:.28em;color:#efb79b;text-transform:uppercase}
+.hkwc-hd h3{font-size:20px;font-weight:800;letter-spacing:-.01em;margin:8px 0 3px}
+.hkwc-hd .sub{font-size:12px;color:#948e84;line-height:1.5}
+.hkwc-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(244,242,235,.14);
+  background:transparent;color:#aea99f;font-size:17px;cursor:pointer;line-height:1;transition:background .2s}
+.hkwc-x:hover{background:rgba(244,242,235,.08);color:#f4f2eb}
+.hkwc-list{flex:1 1 auto;overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:11px;-webkit-overflow-scrolling:touch}
+.hkwc-item{background:#221f1d;border:1px solid rgba(244,242,235,.08);border-radius:12px;padding:12px 14px}
+.hkwc-item .who{display:flex;align-items:baseline;gap:9px;margin-bottom:5px}
+.hkwc-item .name{font-weight:700;font-size:13.5px;color:#f6e1d1}
+.hkwc-item .when{font:400 10.5px/1 ui-monospace,monospace;color:#5f5a52;letter-spacing:.03em}
+.hkwc-item .text{font-size:14px;line-height:1.6;color:#cdc8bd;white-space:pre-wrap;word-break:break-word}
+.hkwc-empty{font:400 12.5px/1.6 ui-monospace,monospace;color:#5f5a52;padding:6px 0}
+.hkwc-ft{flex:0 0 auto;padding:14px 22px 20px;border-top:1px solid rgba(244,242,235,.09);background:#161514}
+.hkwc-ft input,.hkwc-ft textarea{width:100%;background:#221f1d;border:1px solid rgba(244,242,235,.14);border-radius:9px;
+  color:#f4f2eb;font-family:inherit;font-size:14px;padding:9px 11px;margin-bottom:8px}
+.hkwc-ft input::placeholder,.hkwc-ft textarea::placeholder{color:#5f5a52}
+.hkwc-ft input:focus,.hkwc-ft textarea:focus{outline:none;border-color:#e08a5f}
+.hkwc-ft textarea{resize:vertical;min-height:56px;line-height:1.5}
+.hkwc-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.hkwc-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hkwc-msg{font:400 11.5px/1 ui-monospace,monospace;letter-spacing:.02em;min-height:12px}
+.hkwc-msg.ok{color:#aec2d4}.hkwc-msg.err{color:#efb79b}
+.hkwc-send{font:700 13px/1 ui-monospace,monospace;color:#231a14;background:#e08a5f;border:none;border-radius:999px;
+  padding:9px 20px;cursor:pointer;white-space:nowrap;transition:transform .15s,opacity .2s}
+.hkwc-send:hover{transform:translateY(-1px)}.hkwc-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.hkwc-cr{margin-top:12px;font:400 10.5px/1.5 ui-monospace,monospace;color:#5f5a52;letter-spacing:.02em}
+.hkwc-cr a{color:#948e84;text-decoration:none;border-bottom:1px solid rgba(148,142,132,.35)}
+.hkwc-cr a:hover{color:#efb79b;border-bottom-color:#efb79b}
+@media(prefers-reduced-motion:reduce){.hkwc-ov,.hkwc-panel{transition:none}}
+</style>
+<button class="hkwc-tab" id="hkwcTab" aria-label="打开留言板">留言<span class="n" id="hkwcN"></span></button>
+<div class="hkwc-ov" id="hkwcOv" aria-hidden="true">
+  <aside class="hkwc-panel" role="dialog" aria-label="本期留言板" aria-modal="true">
+    <div class="hkwc-hd">
+      <button class="hkwc-x" id="hkwcX" aria-label="关闭">✕</button>
+      <span class="en">TALK · 本期留言</span>
+      <h3>聊两句</h3>
+      <div class="sub">__PAGE_TITLE__</div>
+    </div>
+    <div class="hkwc-list" id="hkwcList"><div class="hkwc-empty">加载中…</div></div>
+    <form class="hkwc-ft" id="hkwcForm" autocomplete="off">
+      <input id="hkwcNick" name="nickname" maxlength="24" placeholder="昵称(可留空=匿名读者)">
+      <input class="hkwc-hp" type="text" name="website" tabindex="-1" aria-hidden="true">
+      <textarea id="hkwcBody" name="content" maxlength="500" rows="2" placeholder="选题建议 / 想深挖哪一段 / 打个招呼…"></textarea>
+      <div class="hkwc-row">
+        <span class="hkwc-msg" id="hkwcMsg"></span>
+        <button class="hkwc-send" id="hkwcSend" type="submit">发送</button>
+      </div>
+      <div class="hkwc-cr">本站演示引擎开源为 Claude Skill · <a href="https://github.com/huiyonghkw/hekouwang-yandu-deck-skill" target="_blank" rel="noopener">GitHub @huiyonghkw</a></div>
+    </form>
+  </aside>
+</div>
+<script>
+(function(){
+  var PAGE='__PAGE_KEY__';
+  var API='/api/comments?page='+encodeURIComponent(PAGE);
+  var tab=document.getElementById('hkwcTab'),ov=document.getElementById('hkwcOv'),
+      xBtn=document.getElementById('hkwcX'),form=document.getElementById('hkwcForm'),
+      nick=document.getElementById('hkwcNick'),body=document.getElementById('hkwcBody'),
+      send=document.getElementById('hkwcSend'),msg=document.getElementById('hkwcMsg'),
+      listEl=document.getElementById('hkwcList'),nEl=document.getElementById('hkwcN');
+  var loaded=false;
+  function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;}
+  function when(ts){var n=Math.floor(Date.now()/1000),d=n-ts;
+    if(d<60)return '刚刚';if(d<3600)return Math.floor(d/60)+' 分钟前';
+    if(d<86400)return Math.floor(d/3600)+' 小时前';if(d<2592000)return Math.floor(d/86400)+' 天前';
+    var t=new Date(ts*1000);return (t.getMonth()+1)+' 月 '+t.getDate()+' 日';}
+  function itemHTML(c){return '<div class="hkwc-item"><div class="who"><span class="name">'+esc(c.nickname)+
+    '</span><span class="when">'+when(c.created_at)+'</span></div><div class="text">'+esc(c.content)+'</div></div>';}
+  function render(list){
+    if(!list||!list.length){listEl.innerHTML='<div class="hkwc-empty">还没有留言,来做第一个 👋</div>';nEl.textContent='';return;}
+    listEl.innerHTML=list.map(itemHTML).join('');nEl.textContent=list.length;}
+  function load(){fetch(API,{headers:{'accept':'application/json'}}).then(function(r){return r.json();})
+    .then(function(d){render(d&&d.comments);}).catch(function(){listEl.innerHTML='<div class="hkwc-empty">加载失败,稍后再试</div>';});}
+  function open(){ov.classList.add('on');ov.setAttribute('aria-hidden','false');if(!loaded){loaded=true;load();}setTimeout(function(){body.focus();},320);}
+  function close(){ov.classList.remove('on');ov.setAttribute('aria-hidden','true');tab.focus();}
+  tab.addEventListener('click',open);
+  xBtn.addEventListener('click',close);
+  ov.addEventListener('click',function(e){if(e.target===ov)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('on'))close();});
+  form.addEventListener('submit',function(ev){ev.preventDefault();
+    var content=body.value.trim();if(!content){msg.textContent='写点什么再发吧';msg.className='hkwc-msg err';return;}
+    send.disabled=true;msg.textContent='发送中…';msg.className='hkwc-msg';
+    fetch('/api/comments',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({page:PAGE,nickname:nick.value,content:content,website:form.website.value})})
+    .then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});})
+    .then(function(res){send.disabled=false;
+      if(!res.ok){msg.textContent=(res.d&&res.d.error)||'发送失败';msg.className='hkwc-msg err';return;}
+      body.value='';msg.textContent='谢谢你的留言 ✓';msg.className='hkwc-msg ok';
+      if(res.d&&res.d.comment){var em=listEl.querySelector('.hkwc-empty');if(em)listEl.innerHTML='';
+        listEl.insertAdjacentHTML('afterbegin',itemHTML(res.d.comment));
+        nEl.textContent=(parseInt(nEl.textContent)||0)+1;}else{load();}})
+    .catch(function(){send.disabled=false;msg.textContent='网络出错,稍后再试';msg.className='hkwc-msg err';});});
+  // 预取一次留言数,给把手加角标(不打开也能看到有没有人聊)
+  fetch(API,{headers:{'accept':'application/json'}}).then(function(r){return r.json();})
+    .then(function(d){if(d&&d.comments&&d.comments.length)nEl.textContent=d.comments.length;}).catch(function(){});
+})();
+</script>
+"""
+
+
+def inject_comments(html: str, page_key: str, page_title: str) -> str:
+    """把悬浮留言面板注入 deck 页(</body> 前)。EP 源不动,只在发布层加。"""
+    safe_title = (page_title or "").replace("<", "").replace(">", "").replace('"', "")
+    snippet = COMMENT_WIDGET.replace("__PAGE_KEY__", page_key).replace("__PAGE_TITLE__", safe_title)
+    if "</body>" in html:
+        return html.replace("</body>", snippet + "\n</body>", 1)
+    return html + snippet
 
 
 def copy_home() -> None:
@@ -236,7 +455,11 @@ def build() -> list[dict]:
         if not s.exists():
             sys.exit(f"❌ 缺字体文件:{s}")
         shutil.copy2(s, fdir / f)
-    print(f"  ✓ 打包字体 → dist/fonts/ ({', '.join(FONT_FILES)})")
+    for f in MOZILLA_FILES:                       # V6 Mozilla 可变字体（有就打包）
+        s = FONT_SRC / f
+        if s.exists():
+            shutil.copy2(s, fdir / f)
+    print(f"  ✓ 打包字体 → dist/fonts/ ({', '.join(FONT_FILES + MOZILLA_FILES)})")
 
     built, missing = [], []
     for src_rel, slug, series, ep, cat, title, dek, screens in MANIFEST:
@@ -247,7 +470,9 @@ def build() -> list[dict]:
             continue
         dst = OUT / f"{slug}.html"
         dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text(localize(src.read_text(encoding="utf-8", errors="replace")), encoding="utf-8")
+        page_html = localize(src.read_text(encoding="utf-8", errors="replace"))
+        page_html = inject_comments(page_html, slug, f"{ep} · {title}")
+        dst.write_text(page_html, encoding="utf-8")
         built.append({"slug": slug, "series": series, "ep": ep, "cat": cat,
                       "title": title, "dek": dek, "screens": screens})
         print(f"  ✓ {src_rel}  →  dist/{slug}.html")
@@ -482,15 +707,18 @@ def deploy_cloudflare() -> None:
     # 项目不存在则创建(已存在会报错,忽略)
     subprocess.run([exe, "pages", "project", "create", CF_PROJECT,
                     "--production-branch", "main"], capture_output=True)
-    cmd = [exe, "pages", "deploy", str(OUT),
-           "--project-name", CF_PROJECT, "--branch", "main", "--commit-dirty=true"]
-    print(f"\n🚀 部署到 Cloudflare Pages: {' '.join(cmd)}")
+    # 配置式部署:不带目录参数,让 wrangler 读 SELF/wrangler.toml
+    # (pages_build_output_dir=dist + functions/ + D1 绑定一起随部署生效),cwd 必须是配置所在目录
+    cmd = [exe, "pages", "deploy",
+           "--branch", "main", "--commit-dirty=true"]
+    print(f"\n🚀 部署到 Cloudflare Pages(读 wrangler.toml): {' '.join(cmd)}  (cwd={SELF})")
     try:
-        subprocess.run(cmd, check=True)
+        subprocess.run(cmd, check=True, cwd=str(SELF))
         print(f"\n✅ 部署完成!公开地址:https://{CF_PROJECT}.pages.dev")
     except subprocess.CalledProcessError as e:
-        sys.exit(f"❌ 部署失败(exit {e.returncode})。先 `wrangler login`,或看上方报错"
-                 f"(若 {CF_PROJECT}.pages.dev 名称被占用,改 CF_PROJECT 换一个前缀)。")
+        sys.exit(f"❌ 部署失败(exit {e.returncode})。先 `wrangler login`;若报 D1 绑定错,"
+                 f"确认 wrangler.toml 里 database_id 已填(见 README「留言板」一节);"
+                 f"若 {CF_PROJECT}.pages.dev 名称被占用,改 CF_PROJECT 换一个前缀。")
 
 
 def main() -> None:
