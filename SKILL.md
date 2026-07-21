@@ -50,11 +50,11 @@ allowed-tools:
 
 ## 1. 把文章做成「演示版 deck」⭐ 核心
 
-一篇 V2 文章 → 一屏一镜的 keynote。**零依赖（纯 CSS + 原生 JS，不引 GSAP/外链，国内/CF 都快）。** 沿用源文章的视觉（默认米白，国标走 V6 焰彩白，见 §1.4）、字体、grain/mesh/frame/幽灵章节号。
+一篇 V2 文章 → 一屏一镜的 keynote。**零依赖（纯 CSS + 原生 JS，不引 GSAP/外链，国内/CF 都快）。** 沿用源文章的视觉（默认米白，国标走 V6 焰彩白，见 第1.4节）、字体、grain/mesh/frame/幽灵章节号。
 
 ### 1.1 引擎（照抄模板，别重写）
 
-样板（**默认拷米白**，选哪套见 §1.4）：
+样板（**默认拷米白**，选哪套见 第1.4节）：
 - `assets/templates/deck-engine-米白.html` — ⭐ **默认**，人文/方法论亮调。
 - `assets/templates/deck-engine-V6焰彩白.html` — 国标系列专属：紫主色+焰橙/粉，Mozilla 可变字体（`publish.py` 的 `MOZILLA_FILES` 已打包 Mozilla 字体、按页面含 "Mozilla" 注入 `PRELOAD_LINKS_V6`）。
 - `assets/templates/deck-engine-暖黑.html` — 🕰️ 仅维护存量（Harness），**新 EP 别拷**。
@@ -64,7 +64,7 @@ allowed-tools:
 
 - 全屏 `.slide`（一屏一镜），`.stage` 居中 + JS `fit()` 等比缩放防裁切；
 - 导航：←/→/空格/点击/触屏滑动/底部圆点/Home/End/F 全屏；右下「▶ 自动播放」(7s/屏，像放视频)；顶部进度条 + `NN/总数`；`#N` 深链（可分享到某屏）；`prefers-reduced-motion` 自动关动画。
-- **S 放映 / 提词器**（讲者视图：计时器 + 当前镜逐字稿 + 下一镜预览，详见 §1.6）。模板已内置该模块，拷模板即带。
+- **S 放映 / 提词器**（讲者视图：计时器 + 当前镜逐字稿 + 下一镜预览，详见 第1.6节）。模板已内置该模块，拷模板即带。
 
 ### 1.2 进场动画钩子（只加 class + `--i` 递增控错峰，CSS 已定义）
 
