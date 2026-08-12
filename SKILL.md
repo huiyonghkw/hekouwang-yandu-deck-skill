@@ -1,5 +1,10 @@
 ---
 name: hekouwang-yandu-deck-skill
+slug: hekouwang-yandu-deck-skill
+displayName: 演读 DECK 产线与发布
+summary: 把文章做成一屏一镜、可翻页、可自动播放的 keynote 演示网页，并发布到 Cloudflare Pages（hekouwang.pages.dev）。含米白/V6焰彩引擎、提词器、留言板与换肤 token-flip。
+license: MIT
+homepage: https://github.com/huiyonghkw/hekouwang-yandu-deck-skill
 version: 1.2.1
 description: >
   会勇禾口王的AI笔记 ·「演读 DECK」沉浸式演示产线与发布 Skill。把一篇文章/选题做成「一屏一镜、可翻页、能自动播放」的 keynote 演示版网页（默认米白引擎，国标系列走 V6 焰彩白；暖黑/焰彩黑为存量历史态），并自托管字体、发布到 Cloudflare Pages（hekouwang.pages.dev）。
