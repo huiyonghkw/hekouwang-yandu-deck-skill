@@ -8,6 +8,12 @@
 
 ---
 
+## [1.3.1] - 2026-08-12
+
+### 优化
+- README：30 秒验收 + 免费/付费表 + @huiyonghkw CTA
+- summary 补英文 SEO 关键词（keynote deck / Cloudflare Pages）
+
 ## [1.3.0] - 2026-08-12
 
 ### 功能

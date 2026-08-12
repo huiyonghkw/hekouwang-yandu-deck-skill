@@ -10,6 +10,22 @@
 
 线上样例：**https://hekouwang.pages.dev**
 
+## 30 秒验收
+
+```bash
+open examples/demo.html                              # 零依赖最小示例
+bash scripts/sync-from-harness.sh <path/to/演读DECK>  # 真身→副本同步
+python3 scripts/publish.py --help                    # 发布脚本可用性
+```
+
+## 免费 / 付费
+
+| | 免费（本仓库） | 付费增值 |
+|---|---|---|
+| 引擎模板 | `deck-engine-米白/V6/暖黑` + `demo.html` | 定制系列视觉 / 内容产线 |
+| 发布 | `publish.py` + CF Pages 配方 | `hekouwang-content-factory` 授权 |
+| 联系 | GitHub Issue | **@huiyonghkw** |
+
 ## 示例动画版本 / Demo
 
 最快的体验方式 —— 双击打开 **[`examples/demo.html`](examples/demo.html)**：一个**自包含、零依赖、系统字体**的最小示例，直接 `file://` 打开就能看引擎怎么动（翻页 / 自动播放 / 柱子生长 / 数字滚动 / 折线描线 / 卡片错峰）。
