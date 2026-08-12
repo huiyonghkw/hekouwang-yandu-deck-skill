@@ -29,7 +29,7 @@ from pathlib import Path
 
 # ---------------------------------------------------------------------------
 SELF = Path(__file__).resolve().parent                # 演读DECK/（发布系统自身目录，自包含）
-ROOT = SELF.parent                                    # 项目根（MANIFEST 里演示版源路径的基准）
+ROOT = SELF.parent                                    # 项目根 Pi.dev/（MANIFEST 里演示版源的基准）
 OUT = SELF / "dist"                                   # 构建产物 = 部署到 CF Pages 的目录
 CF_PROJECT = "hekouwang"              # *.pages.dev 前缀 → hekouwang.pages.dev
 SITE_TITLE = "演读 DECK"
@@ -106,20 +106,6 @@ FONT_MIRRORS = {
 # 发布清单:(源演示版 相对 ROOT, slug, 系列, EP标签, 分类, 标题, 一句话简介, 屏数)
 MANIFEST = [
     (
-        "EP-智能体互联国标系列/序篇-全景与三协议/序篇-演示版.html",
-        "guobiao/xu", "智能体互联国标", "序篇", "全景 · OVERVIEW",
-        "全球第一份「智能体互联」国标，到底定了什么",
-        "GB/Z 185 七部分原文读完：它和 MCP／A2A／ANP 什么关系，最不一样的一刀切在身份。",
-        17,
-    ),
-    (
-        "EP-智能体互联国标系列/EP01-总体架构/EP01-演示版.html",
-        "guobiao/ep01", "智能体互联国标", "EP01", "总体架构 · ARCHITECTURE",
-        "智能体要互联，先过哪五道关",
-        "185.1 总体架构：五域十接口一条闭环，用一次「订会议室」走通身份→工具全链路。",
-        17,
-    ),
-    (
         "EP-算力账本/EP01-把算力当电卖/EP01-演示版.html",
         "suanli/ep01", "算力账本", "EP01", "入门 · BASICS",
         "算力、Token，到底是什么？",
@@ -190,19 +176,78 @@ MANIFEST = [
         17,
     ),
     (
+        "EP-Harness工程系列/EP06-MCP协议大改深读/演示版.html",
+        "harness/ep06", "Harness 工程", "EP06", "协议深读 · MCP",
+        "我之前放弃 MCP 的三个理由，今天被一个个补上",
+        "做 EP02 时我挑了 CLI 放弃 MCP，写了三个理由。2026-07-28 这一版，把这三个理由一个个补上了。MCP 从'能连'变成'能上线'，是 AI 智能体的 HTTP/1.1 时刻。",
+        15,
+    ),
+    (
+        "EP-Harness工程系列/EP01-你以为在挑模型/演示版.html",
+        "harness/ep01", "Harness 工程", "EP01", "入门 · MODEL",
+        "你以为在挑模型，其实在挑 harness",
+        "2026 年模型分数一个比一个高，可用起来还是时好时坏。真正决定体验的不是模型，而是模型外面那整套系统——harness：循环、工具、子代理、校验、权限、记忆。",
+        12,
+    ),
+    (
+        "EP-Harness工程系列/EP02-循环工程/演示版.html",
+        "harness/ep02", "Harness 工程", "EP02", "循环 · LOOP",
+        "你不再写提示了，你开始写循环",
+        "2026 年最早把 AI 用到极致的人不再 prompt，而在设计替自己 prompt 的系统——循环工程。Ralph、六块拼图、翻车四地、最硬反方，外加一个最小可复制循环。",
+        14,
+    ),
+    (
+        "EP-Harness工程系列/EP03-一个人指挥一支AI小队/演示版.html",
+        "harness/ep03", "Harness 工程", "EP03", "指挥 · TEAM",
+        "一个人怎么指挥一支 AI 小队",
+        "同样 2025 年，Anthropic 说子代理把成绩拉高 90.2%，Cognition 说只会得到脆弱系统。这篇把 fan-out 这枚硬币两面摊开，给你一把「什么时候该派小队、什么时候单线程」的尺子。",
+        10,
+    ),
+    (
+        "EP-Harness工程系列/EP04-AI怎么自己发现错了又改对/演示版.html",
+        "harness/ep04", "Harness 工程", "EP04", "校验 · GATE",
+        "AI 说它改好了，你信吗？",
+        "AI 最爱说「搞定了」。这一篇用 4 个天天遇得到的场景，把「AI 怎么自己发现错了又改对」讲成大白话：真正让它改对的不是反思，是给它一份对不上就得重做的标准答案。",
+        12,
+    ),
+    (
         "EP-出行SaaS工程手记/EP01-一份代码变100个小程序/EP01-演示版.html",
         "saas/ep01", "出行SaaS工程手记", "EP01", "多租户 · SAAS",
         "一份代码，怎么变成 100 个商户各自的小程序",
         "微信「代运营」把复杂度的乘法改写成一条平线：授权令牌链 + 9 步代发布流水线 + 边际成本趋零，再让 AI 把它压到一个人扛得住。",
         21,
     ),
+    (
+        "../fastmcp-lab/ep01-hello-tool/教程/演示版.html",
+        "fastmcp/ep01", "FastMCP 中文入门", "EP01", "入门 · HELLO",
+        "FastMCP 是什么？装好并写出第一个 Tool",
+        "官方文档陪读第1课：装好依赖、写出 @mcp.tool、用 verify 绿灯验收——函数写了 ≠ 模型能发现。",
+        15,
+    ),
+    (
+        "../fastmcp-lab/ep02-tools-resources-prompts/教程/演示版.html",
+        "fastmcp/ep02", "FastMCP 中文入门", "EP02", "三分法 · TRP",
+        "Tool 之外，还有 Resource 和 Prompt",
+        "会写 Tool 不等于会设计 MCP server。待办玩具域各放一个最小例子，verify 一次验齐三分。",
+        13,
+    ),
+    (
+        "../fastmcp-lab/ep03-host-connect/教程/演示版.html",
+        "fastmcp/ep03", "FastMCP 中文入门", "EP03", "宿主 · HOST",
+        "verify 全绿，为什么 Cursor 里还是找不到？",
+        "两道验收：进程内绿灯只是入场券；CLI list + 真调 whoami 才算过关。",
+        16,
+    ),
+    (
+        "EP-股票识字系列/EP01-三个市盈率/演示版.html",
+        "shizi/ep01", "股票识字", "EP01", "名词科普 · PE",
+        "软件上三个市盈率，差了快四倍",
+        "用利通电子例题学会静÷动尺子：别抄最小那个「动」，先看它们差多大。",
+        14,
+    ),
 ]
 
 SERIES_META = {
-    "智能体互联国标": {
-        "en": "AGENT INTERCONNECTION · GB/Z 185",
-        "dek": "全球第一份「智能体互联」国标 GB/Z 185，七部分一集集讲成人话。",
-    },
     "算力账本": {
         "en": "COMPUTE LEDGER",
         "dek": "用记账的方式，把 AI 背后的算力与 Token 经济学讲清楚。",
@@ -219,6 +264,14 @@ SERIES_META = {
         "en": "RIDE-SAAS · FIELD NOTES",
         "dek": "面向企业出行的多租户 SaaS，怎么用一份代码服务一百个商户——真实项目里的架构、踩坑与 AI 协作，一期一个战场。",
     },
+    "FastMCP 中文入门": {
+        "en": "FASTMCP LAB",
+        "dek": "官方文档陪读、边造边学：装好 · 三分法 · 宿主接通——每课可跑代码 + 一屏一镜演示。",
+    },
+    "股票识字": {
+        "en": "STOCK LITERACY",
+        "dek": "用实盘例题把投资名词讲成人话：先给尺子，再谈软件上的数字——不喊单、不荐股、只识字。",
+    },
 }
 
 
@@ -230,13 +283,10 @@ SERIES_META = {
 # token 是公开的客户端标识（本来就明文出现在页面里），非密钥，入库无风险。
 # ⚠️ static.cloudflareinsights.com 国内可能加载失败 → CN 真人会被少计。
 #    别把它当唯一真相源；判断国内真人另看留言板 D1 / 公众号后台。
-# ⚠️ 落地新项目时把 token 换成你自己的（CF 控制台 → Web Analytics → 添加站点后拿）。
-#    留空则不注入 beacon（不想统计、或还没建站时的默认）。
-CF_BEACON_TOKEN = ""   # ← 填你自己的 Web Analytics token
 CF_BEACON = ("""<!-- Cloudflare Web Analytics --><script type='module' """
              """src='https://static.cloudflareinsights.com/beacon.min.js' """
-             f"""data-cf-beacon='{{"token": "{CF_BEACON_TOKEN}"}}'>"""
-             """</script><!-- End Cloudflare Web Analytics -->""") if CF_BEACON_TOKEN else ""
+             """data-cf-beacon='{"token": "20ea6ad21c16418aa2645d3147c01ba5"}'>"""
+             """</script><!-- End Cloudflare Web Analytics -->""")
 
 
 def localize(html: str) -> str:
@@ -414,12 +464,25 @@ def subset_cjk() -> None:
     charfile = OUT / "_chars.txt"
     charfile.write_text("".join(sorted(chars)), encoding="utf-8")
 
+    # 注意:只判 exists() 不够。venv 把绝对路径写死在 shebang 里,仓库一挪目录
+    # 脚本还在、但解释器死链,执行时才抛 FileNotFoundError —— 那时 dist/ 已经清掉
+    # 重写了一半。所以这里实跑一次确认可用,不可用就当没有,走下面的缓存兜底。
+    def _usable(exe: str) -> bool:
+        try:
+            subprocess.run([exe, "--help"], capture_output=True, check=True, timeout=30)
+            return True
+        except (OSError, subprocess.SubprocessError):
+            return False
+
     pyft = None
     for cand in (SELF / "tools" / "fenv" / "bin" / "pyftsubset",):
-        if cand.exists():
+        if cand.exists() and _usable(str(cand)):
             pyft = str(cand); break
     if pyft is None:
-        pyft = shutil.which("pyftsubset")
+        found = shutil.which("pyftsubset")
+        pyft = found if found and _usable(found) else None
+    if pyft is None:
+        print("  ⚠️ pyftsubset 不可用(检查 tools/fenv 是否因目录搬迁失效),改用缓存子集")
 
     have_src = all((CJK_SRC / s).exists() for s, _ in CJK_JOBS)
     if pyft and have_src:
@@ -463,7 +526,7 @@ def build() -> list[dict]:
 
     built, missing = [], []
     for src_rel, slug, series, ep, cat, title, dek, screens in MANIFEST:
-        src = ROOT / src_rel
+        src = (ROOT / src_rel).resolve()
         if not src.exists() or src.stat().st_size == 0:
             missing.append(src_rel)
             print(f"  ⚠️  跳过(缺失或空): {src_rel}")

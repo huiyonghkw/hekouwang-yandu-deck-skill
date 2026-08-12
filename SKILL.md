@@ -5,7 +5,7 @@ displayName: 演读 DECK 产线与发布
 summary: 把文章做成一屏一镜、可翻页、可自动播放的 keynote 演示网页，并发布到 Cloudflare Pages（hekouwang.pages.dev）。含米白/V6焰彩引擎、提词器、留言板与换肤 token-flip。
 license: MIT
 homepage: https://github.com/huiyonghkw/hekouwang-yandu-deck-skill
-version: 1.2.1
+version: 1.3.0
 description: >
   会勇禾口王的AI笔记 ·「演读 DECK」沉浸式演示产线与发布 Skill。把一篇文章/选题做成「一屏一镜、可翻页、能自动播放」的 keynote 演示版网页（默认米白引擎，国标系列走 V6 焰彩白；暖黑/焰彩黑为存量历史态），并自托管字体、发布到 Cloudflare Pages（hekouwang.pages.dev）。
   当需要：① 把某篇文章/某期内容做成「演示版 / 演读 DECK / 翻页演示 / keynote 网页 / 沉浸式阅读页」；② 给「演读 DECK」站加一期演示、加一个系列、改首页；③ 给某个系列换主色/换肤（白↔黑 token-flip、切 V6 焰彩）；④ 发布/更新 hekouwang.pages.dev；⑤ 自托管字体、解决首屏字重跳变(FOUT)、子集化思源字体；⑥ 站点留言板（Cloudflare Pages Functions + D1）加装/排错 时使用。
@@ -43,12 +43,12 @@ allowed-tools:
 └── README.md
 ```
 
-> ⚠️ **上面这套是「真身」，本 skill 里的是可移植副本**。日常在项目里改的是真身；**改完记得同步回 skill**，否则副本很快过时（历史上漂移过一次：skill 版落后到没有 Mozilla 字体、没有留言板）。
+> ⚠️ **上面这套是「真身」，本 skill 里的是可移植副本**。日常在项目里改的是真身；**改完跑 `bash scripts/sync-from-harness.sh <演读DECK路径>` 同步回 skill**，否则副本很快过时。
 
 本 Skill 按官方约定分目录带了**可移植副本**（新项目落地时拷过去）：
 - `assets/templates/` — `deck-engine-米白.html`（⭐默认）/ `deck-engine-V6焰彩白.html`（国标）/ `deck-engine-暖黑.html`（仅维护存量）、`home.html`（首页源）、`wrangler.toml` + `schema.sql`（留言板，**database_id 是占位符，落地填自己的**）
-- `scripts/publish.py`（发布脚本）、`assets/functions/api/comments.js`（留言板后端）
-- `references/换肤-token-flip.md`（换肤）、`references/留言板-D1.md`（留言板）、`references/系统说明.md`（**落地 README 模板**，拷进 `演读DECK/README.md` 给人看）、`examples/demo.html`（零依赖最小示例）
+- `scripts/publish.py`（发布脚本）、`scripts/sync-from-harness.sh`（真身→副本单向同步）、`assets/functions/api/comments.js`（留言板后端）
+- `references/换肤-token-flip.md`（换肤）、`references/留言板-D1.md`（留言板）、`references/mobile-and-comments.md`（移动端 safe-area / 留言板开关 / 视频交叉引用）、`references/系统说明.md`（**落地 README 模板**，拷进 `演读DECK/README.md` 给人看）、`examples/demo.html`（零依赖最小示例）
 
 > ⚠️ **落地时 `publish.py` 与 `home.html` 必须同目录**（`publish.py` 用 `SELF/home.html` 找首页源）；`functions/` 要放成 `演读DECK/functions/api/comments.js`。
 > ⚠️ 副本里 **`CF_BEACON_TOKEN` 与 `wrangler.toml` 的 database_id 都留空/占位**——落地新站时填自己的，别沿用他人的（否则流量统计报到别人面板、留言写进别人的库）。

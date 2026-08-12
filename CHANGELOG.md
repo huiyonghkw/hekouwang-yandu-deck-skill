@@ -8,6 +8,15 @@
 
 ---
 
+## [1.3.0] - 2026-08-12
+
+### 功能
+- **`scripts/sync-from-harness.sh`**：从 harness `演读DECK/` 单向同步 `publish.py`、`home.html`、留言板模板到 skill 副本。
+
+### 优化
+- **副本追平真身**：`publish.py` 802 行与 harness 对齐（含 Harness 工程系列 / FastMCP / 股票识字等 MANIFEST）。
+- **`references/mobile-and-comments.md`**：移动端 safe-area、留言板禁用步骤、与 HyperFrames 视频产线分工。
+
 ## [1.2.1] - 2026-08-12
 
 ### 变更
