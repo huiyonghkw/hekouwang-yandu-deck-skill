@@ -8,6 +8,13 @@
 
 ---
 
+## [1.2.1] - 2026-08-12
+
+### 变更
+- **品牌人设对齐 memory `brand-persona-tagline`**：首页 `home.html` 与 `publish.py` 内嵌 about 段，
+  「真会用 AI 的程序员」→ **「会勇禾口王 = AI 工作流 builder」**；补「会勇」谐音「会用」梗。
+- about 文案微调：强调「不靠 PPT 教人，先在自己电脑上跑通再把 Skill 交到你手上」。
+
 ## [1.2.0]
 
 ### 修复

@@ -649,7 +649,7 @@ def write_index(items: list[dict]) -> None:
 
   <section class="about pre">
     <div class="about-en">ABOUT · {BRAND}</div>
-    <p class="about-id">「禾口王」拼起来是个「程」字 —— <b>真会用 AI 的程序员</b>。</p>
+    <p class="about-id">「禾口王」拼起来是个「程」字；「会勇」谐音「会用」—— <b>会勇禾口王 = AI 工作流 builder</b>。</p>
     <p class="about-line">不聊 AI 会不会取代你，只聊先用 AI 的人怎么取代你。我自己先把 AI 工作流跑通，再拆给你——把 6 小时的活干成 30 分钟，一个人干完一支团队。<b>你正在看的这个演示站，就是这套流水线顺手产出的东西之一。</b></p>
     <p class="about-cta">🎁 微信搜 <b>{BRAND}</b>，回复 <b>工厂</b>，领「AI 内容流水线手册」。</p>
   </section>
