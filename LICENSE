@@ -30,7 +30,7 @@ SKILL.md and docs.
 
 It does NOT cover, and this repository does NOT include:
 
-- `hekouwang-content-factory` — a separate, PAID Claude Code Skill (the content/
+- `hekouwang-content-master-skill` — a separate, PAID Claude Code Skill (the content/
   visual-system half). Its content has its own terms; contact the author.
 - Noto Sans SC / Noto Serif SC (思源黑体/思源宋体) — SIL Open Font License (OFL).
   No font files are bundled here; when you fetch them, their OFL applies.

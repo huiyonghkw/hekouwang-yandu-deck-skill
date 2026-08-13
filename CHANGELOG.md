@@ -40,7 +40,7 @@
 ### 修复
 - **捆绑副本追平真身（本次最大的洞）**：skill 里的 `publish.py`（511 行）已落后项目真身（735 行）——**SKILL.md 白纸黑字写着「publish.py 已支持 Mozilla 字体打包」，而副本里 "mozilla" 出现 0 次**；`home.html` 也只有真身的一半（314/657）。已全量同步，并补上从未随 skill 分发的留言板子系统。承诺现在兑现得了。
 - **主色口径追平线上**：description 与 第1.4节 还写着「暖黑/米白两套主色」，实际线上已是四套并存。**推测缺件正是漂移的成因**——占大头的 V6 焰彩黑没有模板（黑版是 flip 出来的），新 EP 无黑版可拷只能退回老模板，Harness（暖黑）/ 出行SaaS（米白）就是这么来的。
-- **陈旧引用**：兄弟 skill 名补 `-skill` 后缀（真实目录是 `hekouwang-content-factory-skill`，旧名照着找会扑空）；`ROOT` 注释里的旧项目名 `Pi.dev/`；`references/系统说明.md` 里的「后续会升级成 Skill」（早就是了）。
+- **陈旧引用**：兄弟 skill 名补 `-skill` 后缀（真实目录是 `hekouwang-content-master-skill`，旧名照着找会扑空）；`ROOT` 注释里的旧项目名 `Pi.dev/`；`references/系统说明.md` 里的「后续会升级成 Skill」（早就是了）。
 - **第2节 首页描述**：主色暖黑 → **米白**（2026-07-14 已改），系列卡「两个」→ **五个**，并点明系列卡是**静态手写**、不由 MANIFEST 生成（`write_index()` 是遗留死函数），加系列须三处一起动。
 
 ### 功能
@@ -80,7 +80,7 @@
   （硬编码家目录 + `assets/fonts/`）改为**正则 `FONT_ABS_RE`**，同时认「任意绝对路径」与未替换的
   `{{SKILL_DIR}}` 占位符，统一收成站内 `/fonts/`；② 引擎模板 `deck-engine-{暖黑,米白}.html` 的
   `@font-face` 硬编码字体路径改为占位符 `{{SKILL_DIR}}/assets/fonts/`，拷模板做 EP 时替换。
-  不再绑定某台机器/用户名；同时修了 content-factory 改用 `{{SKILL_DIR}}` 占位后、源 HTML 字体前缀随机器变化会替换不中导致字体失效的隐患。
+  不再绑定某台机器/用户名；同时修了 content-master-skill 改用 `{{SKILL_DIR}}` 占位后、源 HTML 字体前缀随机器变化会替换不中导致字体失效的隐患。
 
 ### 优化
 - **SKILL.md 声明 `allowed-tools`**：收敛到本 skill 真正需要的工具集，减小越权面。
@@ -91,4 +91,4 @@
 - **字体自托管（零 CDN）**：`publish.py` 删外链、注入本地 `@font-face`、`pyftsubset` 子集化思源黑 4 字重 + 宋，preload 防 FOUT，`/fonts/*` 强缓存。
 - **发布**：构建 `dist/` → `wrangler pages deploy` 到 Cloudflare Pages（hekouwang.pages.dev）；`MANIFEST`/`SERIES_META` 加期加系列。
 - **踩坑沉淀**：dist 每构建清空、本地预览须起 http、CF 子域占用 + 本机 DNS 劫持、EdgeOne 死路、venv 移动失效、代理截断 >4MB 下载。
-- 强依赖内容产线 `hekouwang-content-factory`（付费 skill，提供源文章/视觉规范/字体）；引擎可零依赖单独使用。
+- 强依赖内容产线 `hekouwang-content-master-skill`（付费 skill，提供源文章/视觉规范/字体）；引擎可零依赖单独使用。

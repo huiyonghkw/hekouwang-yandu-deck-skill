@@ -117,5 +117,5 @@ token 映射只管**相对页面底色**的颜色。deck 里还有大量**图表
      --virtual-time-budget=15000 --timeout=30000 \
      --screenshot="$TMP/cover.png" "file://$DECK"
    ```
-   `--timeout` 让 Chrome 自己到点截图退出（退出码 0），不必外部 `pkill`。字体走 content-factory 绝对路径，`file://` 即可加载。
+   `--timeout` 让 Chrome 自己到点截图退出（退出码 0），不必外部 `pkill`。字体走 content-master-skill 绝对路径，`file://` 即可加载。
    ⚠️ 必带 `--incognito` + 独立 `--user-data-dir`，**别碰用户正在用的 Chrome**（见 memory `chrome-screenshot-isolated-incognito`）。

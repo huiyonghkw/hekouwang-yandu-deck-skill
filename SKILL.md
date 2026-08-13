@@ -23,7 +23,7 @@ allowed-tools:
 # 演读 DECK · 沉浸式演示产线与发布
 
 > 「演读 DECK」= 会勇禾口王的AI笔记出品的一款**沉浸式阅读产品**：介于长文和视频之间的第三种读法——一屏一镜、方向键/空格/点击翻页、能自动播放，把一个复杂主题安静完整地讲给你看。
-> 线上：**https://hekouwang.pages.dev** ｜ 与图文产线 `hekouwang-content-factory-skill` 配套（那是出文章/贴图/视频，这是把内容做成翻页演示 + 发布）。
+> 线上：**https://hekouwang.pages.dev** ｜ 与图文产线 `hekouwang-content-master-skill` 配套（那是出文章/贴图/视频，这是把内容做成翻页演示 + 发布）。
 
 ## 0. 系统在哪（先认这个）
 
@@ -65,7 +65,7 @@ allowed-tools:
 - `assets/templates/deck-engine-暖黑.html` — 🕰️ 仅维护存量（Harness），**新 EP 别拷**。
 **做新 EP = 拷一份对应主色的模板，`<head>` 的全部 CSS 和 `</main>` 之后的全部 `<script>` 逐字保留，只换内容 slide / 顶栏标签 / title / 片尾。** 引擎已实现：
 
-> ⚠️ 模板 `@font-face` 里的字体路径是占位符 `{{SKILL_DIR}}/assets/fonts/...`——指向兄弟 skill `hekouwang-content-factory-skill` 的字体。拷模板做 EP 时**把 `{{SKILL_DIR}}` 替换成 hekouwang-content-factory-skill 的绝对 Base directory**（本地预览/截图才有字体）。发布时 `publish.py` 会把它统一收成站内 `/fonts/`，万一漏替换也能兜底。
+> ⚠️ 模板 `@font-face` 里的字体路径是占位符 `{{SKILL_DIR}}/assets/fonts/...`——指向兄弟 skill `hekouwang-content-master-skill` 的字体。拷模板做 EP 时**把 `{{SKILL_DIR}}` 替换成 hekouwang-content-master-skill 的绝对 Base directory**（本地预览/截图才有字体）。发布时 `publish.py` 会把它统一收成站内 `/fonts/`，万一漏替换也能兜底。
 
 - 全屏 `.slide`（一屏一镜），`.stage` 居中 + JS `fit()` 等比缩放防裁切；
 - 导航：←/→/空格/点击/触屏滑动/底部圆点/Home/End/F 全屏；右下「▶ 自动播放」(7s/屏，像放视频)；顶部进度条 + `NN/总数`；`#N` 深链（可分享到某屏）；`prefers-reduced-motion` 自动关动画。
@@ -87,7 +87,7 @@ allowed-tools:
 ### 1.3 内容映射铁律（一图一镜）
 
 源文每个 section + 每张图表都要有对应镜头。**封面屏 + 速览屏（用源文 hero 的关键数据做 readout 仪表条）打头，片尾签收卡收尾**（含私域 CTA），一篇 9 节 → 约 12–24 屏。
-**SVG 图表逐字搬运**（viewBox/坐标/配色/字体不改），只在外层 `.fig` 加 `an`、给数据条/节点/折线加动画钩子。源文的 `.fig.breakout` 破格在演示版里**去掉**（每屏已全宽居中，负 margin 会出问题）。文案可适度精简适配一屏，保意保语气、过 `hekouwang-content-factory-skill` #6.6 去 AI 味。
+**SVG 图表逐字搬运**（viewBox/坐标/配色/字体不改），只在外层 `.fig` 加 `an`、给数据条/节点/折线加动画钩子。源文的 `.fig.breakout` 破格在演示版里**去掉**（每屏已全宽居中，负 margin 会出问题）。文案可适度精简适配一屏，保意保语气、过 `hekouwang-content-master-skill` #6.6 去 AI 味。
 
 ### 1.4 主色：**米白是全站默认**，焰彩白是国标专属例外
 
@@ -130,7 +130,7 @@ allowed-tools:
 发布时 `publish.py` 的 `localize()` 把源 HTML 里所有 Google/loli 外链删掉、注入指向 `/fonts/` 的本地 `@font-face`；Anthropic 绝对路径也改写成 `/fonts/`。`subset_cjk()` 用 `tools/fenv` 的 `pyftsubset` 按**全站实际用字**把思源黑 4 字重（400/500/700/900，800 映射 900）+ 宋（金句衬线）子集化成小 woff2（各 ~180KB），连 Anthropic 一起打包进 `dist/fonts/`。
 
 - **首屏字重跳变(FOUT)**：每页 `<head>` 注入 4 条 `<link rel=preload>`（900/400/Anthropic Sans/Mono）让关键字体高优先级先下；`dist/_headers` 给 `/fonts/*` 设一周强缓存。这两条**必须保留**，否则首屏会「先系统字、再换思源」肉眼可见跳一下。
-- 字体源出处：思源来自 `@fontsource@5.0.0`（jsdelivr）逐字重静态 woff2；Anthropic 来自 `hekouwang-content-factory-skill/assets/fonts/`（自用/演示授权）；Mozilla Headline/Text VF 为 Mozilla 官方开源（OFL），可自由使用。
+- 字体源出处：思源来自 `@fontsource@5.0.0`（jsdelivr）逐字重静态 woff2；Anthropic 来自 `hekouwang-content-master-skill/assets/fonts/`（自用/演示授权）；Mozilla Headline/Text VF 为 Mozilla 官方开源（OFL），可自由使用。
 - venv 丢了重建：`cd 演读DECK && python3 -m venv tools/fenv && tools/fenv/bin/pip install fonttools brotli`。无 venv/字体源时 publish 回退用 `fonts/cache/`。
 
 ## 4. 发布
@@ -157,6 +157,6 @@ python3 演读DECK/publish.py --build-only # 只构建 dist/，不部署
 7. 截图核验演示版给足时间（`--virtual-time-budget=5000`），让 fit/动画跑完再截。
 
 ## 配套与依赖
-- **内容产线（强依赖）：`hekouwang-content-factory-skill`**——演示版的源文章 HTML、视觉规范(V1/V2/V3)、配色 token、字体方案都来自它；本 Skill 只做「内容→翻页演示+发布」这一半。**⚠️ 它是付费 Skill**（需作者授权），仓库不含其内容。只用引擎可直接拷 `assets/templates/deck-engine-*.html`（零依赖独立可用）。
+- **内容产线（强依赖）：`hekouwang-content-master-skill`**——演示版的源文章 HTML、视觉规范(V1/V2/V3)、配色 token、字体方案都来自它；本 Skill 只做「内容→翻页演示+发布」这一半。**⚠️ 它是付费 Skill**（需作者授权），仓库不含其内容。只用引擎可直接拷 `assets/templates/deck-engine-*.html`（零依赖独立可用）。
 - 示例：`examples/demo.html`（自包含、零依赖、双击即看的最小动画示例）。
 - 记忆：`keynote-yanshi-site`（站点现状 + 发布链路）、`keynote-deck-engine`（引擎做法）、`brand-persona-tagline`（人设三句）。

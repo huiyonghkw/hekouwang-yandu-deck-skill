@@ -42,7 +42,7 @@ FONT_SRC = SELF / "fonts" / "src"
 FONT_FILES = ["anthropicSans.woff2", "anthropicMono.woff2"]
 # V6 焰彩白引擎用的 Mozilla 可变字体（拉丁，小体积、无需子集化，整包打进 dist/fonts/）
 MOZILLA_FILES = ["MozillaHeadline-Variable.woff2", "MozillaText-Variable.woff2"]
-# 演示版源 HTML(content-factory 出品)里内嵌的本地字体路径；localize 时统一替换成站内 /fonts/。
+# 演示版源 HTML(content-master-skill 出品)里内嵌的本地字体路径；localize 时统一替换成站内 /fonts/。
 # 正则同时认两种写法，不写死某台机器/用户名——他机/换目录/不同 skill 路径都认：
 #   ① 任意绝对路径 + /assets/fonts/（模型已把 {{SKILL_DIR}} 替换成真实绝对路径的常态）
 #   ② 未替换的 {{SKILL_DIR}}/assets/fonts/ 占位符（模型拷引擎模板时漏替换的兜底）
@@ -713,8 +713,8 @@ def write_index(items: list[dict]) -> None:
   <section class="about pre">
     <div class="about-en">ABOUT · {BRAND}</div>
     <p class="about-id">「禾口王」拼起来是个「程」字；「会勇」谐音「会用」—— <b>会勇禾口王 = AI 工作流 builder</b>。</p>
-    <p class="about-line">不聊 AI 会不会取代你，只聊先用 AI 的人怎么取代你。我自己先把 AI 工作流跑通，再拆给你——把 6 小时的活干成 30 分钟，一个人干完一支团队。<b>你正在看的这个演示站，就是这套流水线顺手产出的东西之一。</b></p>
-    <p class="about-cta">🎁 微信搜 <b>{BRAND}</b>，回复 <b>工厂</b>，领「AI 内容流水线手册」。</p>
+    <p class="about-line">不聊 AI 会不会取代你，只聊先用 AI 的人怎么取代你。我先把选题查清、文章母本和母版 HTML 跑通，再把同一套内容拆成公众号、头条、小红书和演读 DECK。<b>你正在看的这个演示站，就是这套内容流水线顺手产出的东西之一。</b></p>
+    <p class="about-cta">🎁 微信搜 <b>{BRAND}</b>，回复 <b>工厂</b>，领「AI 内容流水线手册」——从 EP 研究包到母版 HTML，再到各渠道适配。</p>
   </section>
 
   <footer>
